@@ -1,0 +1,82 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ isEditMode ? 'Edit Purchase Order' : 'Create Purchase Order' }}</div>
+                <div class="card-body">
+                    <form [formGroup]="purchaseOrderForm" (ngSubmit)="onSubmit()">
+                        <div class="mb-3">
+                            <label for="supplierId" class="form-label">Supplier</label>
+                            <select class="form-select" id="supplierId" formControlName="supplierId"
+                                [class.is-invalid]="purchaseOrderForm.get('supplierId')?.touched && purchaseOrderForm.get('supplierId')?.invalid">
+                                <option value="">Select Supplier</option>
+                                <option *ngFor="let supplier of suppliers" [value]="supplier._id">{{ supplier.name }}
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">Supplier is required</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Products</label>
+                            <div formArrayName="products">
+                                <div *ngFor="let product of productForms.controls; let i=index" [formGroupName]="i"
+                                    class="row mb-2">
+                                    <div class="col-md-4">
+                                        <select class="form-select" formControlName="productId"
+                                            [class.is-invalid]="product.get('productId')?.touched && product.get('productId')?.invalid">
+                                            <option value="">Select Product</option>
+                                            <option *ngFor="let prod of products" [value]="prod._id">{{ prod.name }}
+                                            </option>
+                                        </select>
+                                        <div class="invalid-feedback">Product is required</div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" class="form-control" placeholder="Quantity"
+                                            formControlName="quantity"
+                                            [class.is-invalid]="product.get('quantity')?.touched && product.get('quantity')?.invalid">
+                                        <div class="invalid-feedback">Quantity must be at least 1</div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" class="form-control" placeholder="Price"
+                                            formControlName="price"
+                                            [class.is-invalid]="product.get('price')?.touched && product.get('price')?.invalid">
+                                        <div class="invalid-feedback">Price must be positive</div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-danger" (click)="removeProduct(i)">
+                                            <i class="bi bi-trash me-1"></i>Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-secondary mt-2" (click)="addProduct()">
+                                <i class="bi bi-plus-circle me-2"></i>
+                                Add Product</button>
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" formControlName="date"
+                                [class.is-invalid]="purchaseOrderForm.get('date')?.touched && purchaseOrderForm.get('date')?.invalid">
+                            <div class="invalid-feedback">Date is required</div>
+                        </div>
+                        <div class="mb-3" *ngIf="isEditMode">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" formControlName="status">
+                                <option value="Pending">Pending</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Notes</label>
+                            <textarea class="form-control" id="notes" formControlName="notes"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary me-2" [disabled]="purchaseOrderForm.invalid">
+                            <i class="bi bi-check-circle me-2"></i>
+                            {{ isEditMode ? 'Update' : 'Save' }}</button>
+                        <button type="button" class="btn btn-secondary" [routerLink]="['/order/purchases']"><i
+                                class="bi bi-x-circle me-2"></i>Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

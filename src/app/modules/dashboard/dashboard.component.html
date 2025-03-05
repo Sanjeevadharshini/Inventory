@@ -1,0 +1,111 @@
+<div class="container-fluid mt-4">
+    <h2 class="mb-4 animate__animated animate__fadeIn">Smart Inventory Hub Dashboard</h2>
+    <div class="row">
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card text-white bg-primary animate__animated animate__bounceIn">
+                <div class="card-body">
+                    <h5 class="card-title">Total Products</h5>
+                    <p class="card-text display-4">{{ stats.totalProducts }}</p>
+                    <a class="btn btn-light btn-sm" [routerLink]="['/product/list']">
+                        <i class="bi bi-box-seam me-2"></i> View Products
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card text-white bg-warning animate__animated animate__bounceIn">
+                <div class="card-body">
+                    <h5 class="card-title">Low Stock</h5>
+                    <p class="card-text display-4">{{ stats.lowStock }}</p>
+                    <a class="btn btn-light btn-sm" [routerLink]="['/stock/overview']">
+                        <i class="bi bi-inbox me-2"></i> View Stock
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card animate__animated animate__fadeIn">
+                <div class="card-header">
+                    Sales Trend (Last 5 Orders)
+                </div>
+                <div class="card-body">
+                    <canvas id="salesChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card animate__animated animate__fadeIn">
+                <div class="card-header">
+                    Top 5 Stock Levels
+                </div>
+                <div class="card-body">
+                    <canvas id="stockChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card animate__animated animate__fadeIn">
+                <div class="card-header">
+                    Recent Sales
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let sale of stats.recentSales">
+                                    <td>{{ sale.orderId }}</td>
+                                    <td>{{ sale.customerId?.name || 'Unknown' }}</td>
+                                    <td>{{ sale.date | date:'mediumDate' }}</td>
+                                    <td>{{ sale.totalAmount | currency }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <a class="btn btn-primary btn-sm" [routerLink]="['/order/sales']">
+                        <i class="bi bi-cart-check me-2"></i> View All Sales
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card animate__animated animate__fadeIn">
+                <div class="card-header">
+                    Recent Purchases
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Supplier</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let purchase of stats.recentPurchases">
+                                    <td>{{ purchase.orderId }}</td>
+                                    <td>{{ purchase.supplierId?.name || 'Unknown' }}</td>
+                                    <td>{{ purchase.date | date:'mediumDate' }}</td>
+                                    <td>{{ purchase.totalAmount | currency }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <a class="btn btn-primary btn-sm" [routerLink]="['/order/purchases']">
+                        <i class="bi bi-bag-plus me-2"></i> View All Purchases
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Stock Adjustment</div>
+                <div class="card-body">
+                    <form [formGroup]="adjustmentForm" (ngSubmit)="onSubmit()">
+                        <div class="mb-3">
+                            <label for="productId" class="form-label">Product</label>
+                            <select class="form-select" id="productId" formControlName="productId"
+                                [class.is-invalid]="adjustmentForm.get('productId')?.touched && adjustmentForm.get('productId')?.invalid">
+                                <option value="">Select Product</option>
+                                <option *ngFor="let product of products" [value]="product._id">{{ product.name }}
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">Product is required</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="adjustmentType" class="form-label">Adjustment Type</label>
+                            <select class="form-select" id="adjustmentType" formControlName="adjustmentType"
+                                [class.is-invalid]="adjustmentForm.get('adjustmentType')?.touched && adjustmentForm.get('adjustmentType')?.invalid">
+                                <option value="">Select Adjustment Type</option>
+                                <option *ngFor="let type of adjustmentTypes" [value]="type">{{ type }}</option>
+                            </select>
+                            <div class="invalid-feedback">Adjustment type is required</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" formControlName="quantity"
+                                [class.is-invalid]="adjustmentForm.get('quantity')?.touched && adjustmentForm.get('quantity')?.invalid">
+                            <div class="invalid-feedback">Quantity must be a positive number</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reason" class="form-label">Reason</label>
+                            <textarea class="form-control" id="reason" formControlName="reason"
+                                [class.is-invalid]="adjustmentForm.get('reason')?.touched && adjustmentForm.get('reason')?.invalid"></textarea>
+                            <div class="invalid-feedback">Reason is required</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary me-2" [disabled]="adjustmentForm.invalid"><i
+                                class="bi bi-check-circle me-2"></i>
+                            Save</button>
+                        <button type="button" class="btn btn-secondary" [routerLink]="['/stock/overview']"> <i
+                                class="bi bi-x-circle me-2"></i>Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

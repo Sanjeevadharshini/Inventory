@@ -1,0 +1,56 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Register New User</div>
+                <div class="card-body">
+                    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" formControlName="name"
+                                [class.is-invalid]="registerForm.get('name')?.touched && registerForm.get('name')?.invalid">
+                            <div class="invalid-feedback">Name is required</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" formControlName="email"
+                                [class.is-invalid]="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+                            <div class="invalid-feedback">
+                                <div *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</div>
+                                <div *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" formControlName="password"
+                                [class.is-invalid]="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+                            <div class="invalid-feedback">
+                                <div *ngIf="registerForm.get('password')?.errors?.['required']">Password is required
+                                </div>
+                                <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at
+                                    least 6 characters</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <select class="form-select" id="role" formControlName="role"
+                                [class.is-invalid]="registerForm.get('role')?.touched && registerForm.get('role')?.invalid">
+                                <option value="">Select Role</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Employee">Employee</option>
+                            </select>
+                            <div class="invalid-feedback">Role is required</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary me-2" [disabled]="registerForm.invalid">
+                            <i class="bi bi-check-circle me-2"></i>Register</button>
+                        <button type="button" class="btn btn-secondary" routerLink="/auth/users">
+                            <i class="bi bi-x-circle me-2"></i>
+                            Cancel</button>
+                        <div class="text-danger mt-2" *ngIf="errorMessage">{{ errorMessage }}</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

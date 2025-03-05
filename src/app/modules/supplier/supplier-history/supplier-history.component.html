@@ -1,0 +1,33 @@
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5>Supplier Purchase History</h5>
+            <button class="btn btn-secondary" [routerLink]="['/supplier/list']"><i
+                    class="fa fa-angle-double-left me-1"></i>
+                Back to Supplier List</button>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped" *ngIf="purchases.length; else noPurchases">
+                <thead>
+                    <tr>
+                        <th>Purchase Date</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Total Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let purchase of purchases">
+                        <td>{{ purchase.date | date:'medium' }}</td>
+                        <td>{{ purchase.productId?.name || 'Unknown' }}</td>
+                        <td>{{ purchase.quantity }}</td>
+                        <td>{{ (purchase.quantity * purchase.purchasePrice) | currency }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <ng-template #noPurchases>
+                <p>No purchase history available.</p>
+            </ng-template>
+        </div>
+    </div>
+</div>

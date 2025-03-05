@@ -1,0 +1,36 @@
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5>Stock Report</h5>
+            <div class="d-flex gap-2">
+                <select class="form-select w-auto" [(ngModel)]="selectedCategory" (change)="filterByCategory()">
+                    <option value="">All Categories</option>
+                    <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                </select>
+                <button class="btn btn-secondary" (click)="exportToPDF()"><i class="fa fa-file-pdf me-1"></i> Export to PDF</button>
+                <button class="btn btn-secondary" (click)="exportToCSV()"> <i class="fa fa-file-excel me-1"></i> Export to CSV</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Current Stock</th>
+                        <th>Low Stock Alert</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of filteredProducts">
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.category }}</td>
+                        <td>{{ product.stock }}</td>
+                        <td [class.text-danger]="product.stock < 10">{{ product.stock < 10 ? 'Low Stock' : 'Normal'
+                                }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

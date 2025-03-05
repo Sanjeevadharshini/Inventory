@@ -1,0 +1,49 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Edit Product</div>
+                <div class="card-body">
+                    <form [formGroup]="editProductForm" (ngSubmit)="onSubmit()">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="name" formControlName="name"
+                                [class.is-invalid]="editProductForm.get('name')?.touched && editProductForm.get('name')?.invalid">
+                            <div class="invalid-feedback">Product name is required</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Category</label>
+                            <select class="form-select" id="category" formControlName="category"
+                                [class.is-invalid]="editProductForm.get('category')?.touched && editProductForm.get('category')?.invalid">
+                                <option value="">Select Category</option>
+                                <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                            </select>
+                            <div class="invalid-feedback">Category is required</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="price" formControlName="price"
+                                [class.is-invalid]="editProductForm.get('price')?.touched && editProductForm.get('price')?.invalid">
+                            <div class="invalid-feedback">Price must be a positive number</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="stock" class="form-label">Stock Level</label>
+                            <input type="number" class="form-control" id="stock" formControlName="stock"
+                                [class.is-invalid]="editProductForm.get('stock')?.touched && editProductForm.get('stock')?.invalid">
+                            <div class="invalid-feedback">Stock must be a positive integer</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" formControlName="description"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary me-2" [disabled]="editProductForm.invalid"> <i
+                                class="bi bi-check-circle me-2"></i>
+                            Update</button>
+                        <button type="button" class="btn btn-secondary" routerLink="/product/list">
+                            <i class="bi bi-x-circle me-2"></i>Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card animate__animated animate__fadeIn">
+                <div class="card-header text-center">
+                    <h5 class="mb-0">Your Profile</h5>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="name" placeholder="Name" formControlName="name"
+                                [class.is-invalid]="profileForm.get('name')?.touched && profileForm.get('name')?.invalid">
+                            <label for="name">Name</label>
+                            <div class="invalid-feedback">Name is required</div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="email" placeholder="Email"
+                                formControlName="email"
+                                [class.is-invalid]="profileForm.get('email')?.touched && profileForm.get('email')?.invalid">
+                            <label for="email">Email</label>
+                            <div class="invalid-feedback">Please enter a valid email</div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="password" placeholder="Password (optional)"
+                                formControlName="password">
+                            <label for="password">Password (optional)</label>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary w-100" [disabled]="profileForm.invalid">
+                                <i class="bi bi-check-circle me-2"></i> Update Profile
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

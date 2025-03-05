@@ -1,0 +1,5 @@
+<app-header></app-header>
+<app-sidebar *ngIf="isAuthenticated()" (toggleSidebarEvent)="onSidebarToggle($event)"></app-sidebar>
+<div class="content" [ngClass]="{ 'content-open': isSidebarOpen, 'content-closed': !isSidebarOpen }">
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,104 @@
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">{{ isEditMode ? 'Edit Sales Order' : 'Create Sales Order' }}</h5>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="salesOrderForm" (ngSubmit)="onSubmit()">
+                <div class="mb-4">
+                    <div class="form-floating">
+                        <select class="form-select" id="customerId" formControlName="customerId"
+                            [class.is-invalid]="salesOrderForm.get('customerId')?.touched && salesOrderForm.get('customerId')?.invalid">
+                            <option value="">Select Customer</option>
+                            <option *ngFor="let customer of customers" [value]="customer._id">{{ customer.name }}
+                            </option>
+                        </select>
+                        <label for="customerId">Customer</label>
+                        <div class="invalid-feedback">Customer is required</div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Products</label>
+                    <div formArrayName="products">
+                        <div *ngFor="let product of productForms.controls; let i=index" [formGroupName]="i"
+                            class="row mb-3 align-items-center">
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <select class="form-select" formControlName="productId"
+                                        [class.is-invalid]="product.get('productId')?.touched && product.get('productId')?.invalid">
+                                        <option value="">Select Product</option>
+                                        <option *ngFor="let prod of products" [value]="prod._id">{{ prod.name }}
+                                        </option>
+                                    </select>
+                                    <label>Product</label>
+                                    <div class="invalid-feedback">Product is required</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" placeholder="Quantity"
+                                        formControlName="quantity"
+                                        [class.is-invalid]="product.get('quantity')?.touched && product.get('quantity')?.invalid">
+                                    <label>Quantity</label>
+                                    <div class="invalid-feedback">Quantity must be at least 1</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" placeholder="Price"
+                                        formControlName="price"
+                                        [class.is-invalid]="product.get('price')?.touched && product.get('price')?.invalid">
+                                    <label>Price</label>
+                                    <div class="invalid-feedback">Price must be positive</div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-danger" (click)="removeProduct(i)">
+                                    <i class="bi bi-trash me-1"></i> Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" (click)="addProduct()">
+                        <i class="bi bi-plus-circle me-2"></i> Add Product
+                    </button>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="date" class="form-control" id="date" formControlName="date"
+                                [class.is-invalid]="salesOrderForm.get('date')?.touched && salesOrderForm.get('date')?.invalid">
+                            <label for="date">Date</label>
+                            <div class="invalid-feedback">Date is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="isEditMode">
+                        <div class="form-floating">
+                            <select class="form-select" id="status" formControlName="status">
+                                <option value="Pending">Pending</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                            <label for="status">Status</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="form-floating">
+                        <textarea class="form-control" id="notes" formControlName="notes"
+                            style="height: 100px;"></textarea>
+                        <label for="notes">Notes</label>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary me-2" [disabled]="salesOrderForm.invalid">
+                        <i class="bi bi-check-circle me-2"></i> {{ isEditMode ? 'Update' : 'Save' }}
+                    </button>
+                    <button type="button" class="btn btn-secondary" [routerLink]="['/order/sales']">
+                        <i class="bi bi-x-circle me-2"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

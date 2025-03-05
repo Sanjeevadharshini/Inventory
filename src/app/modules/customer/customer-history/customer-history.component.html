@@ -1,0 +1,33 @@
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5>Customer Order History</h5>
+            <button class="btn btn-secondary" [routerLink]="['/customer/list']">
+                <i class="bi bi-list"></i>
+                Back to Customer List</button>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped" *ngIf="orders.length; else noOrders">
+                <thead>
+                    <tr>
+                        <th>Order Date</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of orders">
+                        <td>{{ order.date | date:'medium' }}</td>
+                        <td>{{ order.productId?.name || 'Unknown' }}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td>{{ (order.quantity * order.salePrice) | currency }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <ng-template #noOrders>
+                <p>No order history available.</p>
+            </ng-template>
+        </div>
+    </div>
+</div>

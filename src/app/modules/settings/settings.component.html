@@ -1,0 +1,63 @@
+<div class="container mt-5">
+    <div class="card animate__animated animate__fadeIn">
+        <div class="card-header">
+            <h5 class="mb-0"> Settings</h5>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+                <div class="mb-4">
+                    <div class="form-floating">
+                        <textarea class="form-control" id="companyInfo" formControlName="companyInfo"
+                            style="height: 100px;"></textarea>
+                        <label for="companyInfo">Company Info</label>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Company Logo</label>
+                    <div class="d-flex align-items-center mb-2">
+                        <input type="file" id="companyLogo" class="form-control" accept="image/*"
+                            (change)="onLogoUpload($event)" style="width: auto;">
+                        <button type="button" class="btn btn-danger ms-2" (click)="removeLogo()"
+                            *ngIf="logoPreview">Remove Logo</button>
+                    </div>
+                    <div *ngIf="logoPreview" class="mt-2">
+                        <img [src]="logoPreview" alt="Company Logo Preview"
+                            style="max-width: 200px; max-height: 200px; border-radius: 5px;">
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <select class="form-select" id="currency" formControlName="currency"
+                                [class.is-invalid]="settingsForm.get('currency')?.touched && settingsForm.get('currency')?.invalid">
+                                <option value="USD">USD</option>
+                                <option value="EUR">EUR</option>
+                                <option value="GBP">GBP</option>
+                                <option value="INR">INR</option>
+                            </select>
+                            <label for="currency">Currency</label>
+                            <div class="invalid-feedback">Currency is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="number" class="form-control" id="stockAlertThreshold"
+                                formControlName="stockAlertThreshold"
+                                [class.is-invalid]="settingsForm.get('stockAlertThreshold')?.touched && settingsForm.get('stockAlertThreshold')?.invalid">
+                            <label for="stockAlertThreshold">Stock Alert Threshold</label>
+                            <div class="invalid-feedback">Threshold must be a positive number</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary me-2" [disabled]="settingsForm.invalid">
+                        <i class="bi bi-check-circle me-2"></i> Save
+                    </button>
+                    <button type="button" class="btn btn-secondary" [routerLink]="['/dashboard']">
+                        <i class="bi bi-x-circle me-2"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

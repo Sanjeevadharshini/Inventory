@@ -1,0 +1,38 @@
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5>Profit & Loss Analysis</h5>
+            <div class="d-flex gap-2">
+                <form [formGroup]="profitLossForm" class="d-flex gap-2 align-items-center">
+                    <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <input type="date" class="form-control" id="startDate" formControlName="startDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">End Date</label>
+                        <input type="date" class="form-control" id="endDate" formControlName="endDate">
+                    </div>
+                    <button type="button" class="btn btn-primary" (click)="loadProfitLossReport()">
+                        <i class="fa fa-filter me-1"></i>Filter</button>
+                </form>
+                <button class="btn btn-secondary" (click)="exportToPDF()">
+                    <i class="fa fa-file-pdf me-1"></i> Export to PDF</button>
+                <button class="btn btn-secondary" (click)="exportToCSV()">
+                    <i class="fa fa-file-excel me-1"></i> Export to CSV</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <h6>Total Revenue: {{ profitLossData.totalRevenue | currency }}</h6>
+                </div>
+                <div class="col-md-4">
+                    <h6>Total Cost: {{ profitLossData.totalCost | currency }}</h6>
+                </div>
+                <div class="col-md-4">
+                    <h6>Profit/Loss: {{ profitLossData.profitLoss | currency }}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

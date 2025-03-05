@@ -1,0 +1,56 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Inward Stock Entry</div>
+                <div class="card-body">
+                    <form [formGroup]="inwardForm" (ngSubmit)="onSubmit()">
+                        <div class="mb-3">
+                            <label for="productId" class="form-label">Product</label>
+                            <select class="form-select" id="productId" formControlName="productId"
+                                [class.is-invalid]="inwardForm.get('productId')?.touched && inwardForm.get('productId')?.invalid">
+                                <option value="">Select Product</option>
+                                <option *ngFor="let product of products" [value]="product._id">{{ product.name }}
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">Product is required</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="supplierId" class="form-label">Supplier</label>
+                            <select class="form-select" id="supplierId" formControlName="supplierId"
+                                [class.is-invalid]="inwardForm.get('supplierId')?.touched && inwardForm.get('supplierId')?.invalid">
+                                <option value="">Select Supplier</option>
+                                <option *ngFor="let supplier of suppliers" [value]="supplier._id">{{ supplier.name }}
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">Supplier is required</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" formControlName="quantity"
+                                [class.is-invalid]="inwardForm.get('quantity')?.touched && inwardForm.get('quantity')?.invalid">
+                            <div class="invalid-feedback">Quantity must be a positive number</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="purchasePrice" class="form-label">Purchase Price</label>
+                            <input type="number" class="form-control" id="purchasePrice" formControlName="purchasePrice"
+                                [class.is-invalid]="inwardForm.get('purchasePrice')?.touched && inwardForm.get('purchasePrice')?.invalid">
+                            <div class="invalid-feedback">Purchase price must be a positive number</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" formControlName="date"
+                                [class.is-invalid]="inwardForm.get('date')?.touched && inwardForm.get('date')?.invalid">
+                            <div class="invalid-feedback">Date is required</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary me-2" [disabled]="inwardForm.invalid">
+                            <i class="bi bi-check-circle me-2"></i>
+                            Save</button>
+                        <button type="button" class="btn btn-secondary" [routerLink]="['/stock/overview']"> <i
+                                class="bi bi-x-circle me-2"></i>Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

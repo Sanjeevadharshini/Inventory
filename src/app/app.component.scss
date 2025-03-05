@@ -1,0 +1,16 @@
+:host {
+    display: block;
+    min-height: 100vh;
+}
+
+.content {
+    transition: margin-left 0.3s ease; /* Smooth transition for content shift */
+}
+
+.content-open {
+    margin-left: 250px; /* Matches sidebar width when open */
+}
+
+.content-closed {
+    margin-left: 60px; /* Matches sidebar width when closed */
+}

@@ -1,0 +1,214 @@
+<div class="sidebar" [ngClass]="{ 'closed': !isOpen }">
+    <div class="toggle-btn">
+        <button class="btn btn-secondary w-100" (click)="toggleSidebar()" title="Toggle Sidebar">
+            <i class="bi bi-list"></i> {{ isOpen ? 'Close' : 'Open' }}
+        </button>
+    </div>
+    <div class="scrollable-content">
+        <ul class="nav flex-column" *ngIf="isOpen">
+            <!-- Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" title="View Dashboard">
+                    <i class="bi bi-house-door me-2"></i> Dashboard
+                </a>
+            </li>
+
+            <!-- Auth (Admin only) -->
+            <li class="nav-item" *ngIf="getUserRole() === 'Admin'">
+                <a class="nav-link dropdown-toggle" href="#" id="authDropdown" role="button" data-bs-toggle="collapse"
+                    data-bs-target="#authMenu" aria-expanded="false" aria-controls="authMenu" title="Manage Authentication">
+                    <i class="bi bi-person-lock me-2"></i> Auth
+                </a>
+                <div class="collapse" id="authMenu">
+                    <ul class="nav flex-column ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/auth/register" routerLinkActive="active" title="Register User">
+                                <i class="bi bi-person-plus me-2"></i> Register
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/auth/users" routerLinkActive="active" title="Manage Users">
+                                <i class="bi bi-people me-2"></i> Users
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <!-- Products -->
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" href="#" id="productsDropdown" role="button" data-bs-toggle="collapse"
+                    data-bs-target="#productsMenu" aria-expanded="false" aria-controls="productsMenu" title="Manage Products">
+                    <i class="bi bi-box-seam me-2"></i> Products
+                </a>
+                <div class="collapse" id="productsMenu">
+                    <ul class="nav flex-column ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/product/list" routerLinkActive="active" title="View Products">
+                                <i class="bi bi-list-ul me-2"></i> List
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/product/add" routerLinkActive="active" title="Add Product">
+                                <i class="bi bi-plus-circle me-2"></i> Add
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <!-- Stock (Admin/Manager) -->
+            <li class="nav-item" *ngIf="getUserRole() === 'Admin' || getUserRole() === 'Manager'">
+                <a class="nav-link dropdown-toggle" href="#" id="stockDropdown" role="button" data-bs-toggle="collapse"
+                    data-bs-target="#stockMenu" aria-expanded="false" aria-controls="stockMenu" title="Manage Stock">
+                    <i class="bi bi-inbox me-2"></i> Stock
+                </a>
+                <div class="collapse" id="stockMenu">
+                    <ul class="nav flex-column ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/stock/overview" routerLinkActive="active" title="Stock Summary">
+                                <i class="bi bi-eye me-2"></i> Overview
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/stock/inward" routerLinkActive="active" title="Incoming Stock">
+                                <i class="bi bi-arrow-down-circle me-2"></i> Inward
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/stock/outward" routerLinkActive="active" title="Outgoing Stock">
+                                <i class="bi bi-arrow-up-circle me-2"></i> Outward
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/stock/adjustment" routerLinkActive="active" title="Adjust Stock">
+                                <i class="bi bi-gear me-2"></i> Adjust
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <!-- Suppliers (Admin/Manager) -->
+            <li class="nav-item" *ngIf="getUserRole() === 'Admin' || getUserRole() === 'Manager'">
+                <a class="nav-link dropdown-toggle" href="#" id="suppliersDropdown" role="button" data-bs-toggle="collapse"
+                    data-bs-target="#suppliersMenu" aria-expanded="false" aria-controls="suppliersMenu" title="Manage Suppliers">
+                    <i class="bi bi-truck me-2"></i> Suppliers
+                </a>
+                <div class="collapse" id="suppliersMenu">
+                    <ul class="nav flex-column ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/supplier/list" routerLinkActive="active" title="View Suppliers">
+                                <i class="bi bi-list-ul me-2"></i> List
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/supplier/add" routerLinkActive="active" title="Add Supplier">
+                                <i class="bi bi-plus-circle me-2"></i> Add
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <!-- Customers (Admin/Manager) -->
+            <li class="nav-item" *ngIf="getUserRole() === 'Admin' || getUserRole() === 'Manager'">
+                <a class="nav-link dropdown-toggle" href="#" id="customersDropdown" role="button" data-bs-toggle="collapse"
+                    data-bs-target="#customersMenu" aria-expanded="false" aria-controls="customersMenu" title="Manage Customers">
+                    <i class="bi bi-people me-2"></i> Customers
+                </a>
+                <div class="collapse" id="customersMenu">
+                    <ul class="nav flex-column ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/customer/list" routerLinkActive="active" title="View Customers">
+                                <i class="bi bi-list-ul me-2"></i> List
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/customer/add" routerLinkActive="active" title="Add Customer">
+                                <i class="bi bi-plus-circle me-2"></i> Add
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <!-- Orders (Admin/Manager) -->
+            <li class="nav-item" *ngIf="getUserRole() === 'Admin' || getUserRole() === 'Manager'">
+                <a class="nav-link dropdown-toggle" href="#" id="ordersDropdown" role="button" data-bs-toggle="collapse"
+                    data-bs-target="#ordersMenu" aria-expanded="false" aria-controls="ordersMenu" title="Manage Orders">
+                    <i class="bi bi-cart me-2"></i> Orders
+                </a>
+                <div class="collapse" id="ordersMenu">
+                    <ul class="nav flex-column ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/order/sales" routerLinkActive="active" title="View Sales">
+                                <i class="bi bi-bag-check me-2"></i> Sales
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/order/sales/create" routerLinkActive="active" title="New Sales Order">
+                                <i class="bi bi-plus-circle me-2"></i> New Sale
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/order/purchases" routerLinkActive="active" title="View Purchases">
+                                <i class="bi bi-bag-plus me-2"></i> Purchases
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/order/purchases/create" routerLinkActive="active" title="New Purchase Order">
+                                <i class="bi bi-plus-circle me-2"></i> New Purchase
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <!-- Insights (Admin/Manager) -->
+            <li class="nav-item" *ngIf="getUserRole() === 'Admin' || getUserRole() === 'Manager'">
+                <a class="nav-link dropdown-toggle" href="#" id="reportsDropdown" role="button" data-bs-toggle="collapse"
+                    data-bs-target="#reportsMenu" aria-expanded="false" aria-controls="reportsMenu" title="View Insights">
+                    <i class="bi bi-bar-chart me-2"></i> Insights
+                </a>
+                <div class="collapse" id="reportsMenu">
+                    <ul class="nav flex-column ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/reports/stock" routerLinkActive="active" title="Stock Report">
+                                <i class="bi bi-inbox me-2"></i> Stock
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/reports/sales" routerLinkActive="active" title="Sales Report">
+                                <i class="bi bi-cart-check me-2"></i> Sales
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/reports/purchases" routerLinkActive="active" title="Purchase Report">
+                                <i class="bi bi-bag-plus me-2"></i> Purchases
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/reports/profit-loss" routerLinkActive="active" title="Profit & Loss">
+                                <i class="bi bi-currency-dollar me-2"></i> P&L
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <!-- Settings (Admin only) -->
+            <li class="nav-item" *ngIf="getUserRole() === 'Admin'">
+                <a class="nav-link" routerLink="/settings" routerLinkActive="active" title="System Settings">
+                    <i class="bi bi-gear me-2"></i> Settings
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- Logout -->
+    <div class="logout-section" *ngIf="isOpen">
+        <a class="nav-link text-danger" href="#" (click)="logout()" title="Sign Out">
+            <i class="bi bi-box-arrow-right me-2"></i> Logout
+        </a>
+    </div>
+</div>
